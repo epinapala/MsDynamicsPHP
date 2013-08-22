@@ -6,18 +6,20 @@
  * Developed for eBay internal use.
  */
 
-define('d', date("m/d/Y"));
+define('d', date("m/d/Y H:i:s"));
 set_include_path(get_include_path() . PATH_SEPARATOR . "src" . PATH_SEPARATOR . "utils");
+
 
 include_once "LiveIdManager.php";
 include_once "EntityUtils.php";
 include_once 'PrintUtils.php';
-include_once 'CrmAPI.php';
+include_once 'CrmAPIContext.php';
 
 $liveIDUseranme = "Your CRM Username";
 $liveIDPassword = "YOUR CRM Password";
-
 $organizationServiceURL = "https://yourOrgName.api.crm.dynamics.com/XRMServices/2011/Organization.svc";// Get it from home > customizations > Developer Resources
+
+
 $liveIDManager = new LiveIDManager();
 
 $securityData = $liveIDManager->authenticateWithLiveID($organizationServiceURL, $liveIDUseranme, $liveIDPassword);
@@ -32,12 +34,14 @@ if ($securityData != null && isset($securityData)) {
 }
 echo "\n";
 
-$accountId = CrmAPI::createOrg($organizationServiceURL, $securityData, "New Org created by Rajesh\'s app");
+$dynamicsCrm = new CrmAPIContext();
 
-PrintUtils::dump(CrmAPI::readOrg($accountId, $organizationServiceURL, $securityData));
+$accountId = $dynamicsCrm->createOrg($organizationServiceURL, $securityData, "New Org created by Rajesh\'s app" . d );
 
-CrmAPI::updateOrg($accountId, $organizationServiceURL, $securityData, "New Org name Updated by Rajesh\'s app_" . d);
-PrintUtils::dump(CrmAPI::readOrg($accountId, $organizationServiceURL, $securityData));
+PrintUtils::dump($dynamicsCrm->readOrg($accountId, $organizationServiceURL, $securityData));
+
+$dynamicsCrm->updateOrg($accountId, $organizationServiceURL, $securityData, "New Org name Updated by Rajesh\'s app_" . d);
+PrintUtils::dump($dynamicsCrm->readOrg($accountId, $organizationServiceURL, $securityData));
 
 //Uncomment only if you want to delete the created org
-//deleteAccount($accountId, $organizationServiceURL, $securityData);
+//$dynamicsCrm->deleteOrg($accountId, $organizationServiceURL, $securityData);

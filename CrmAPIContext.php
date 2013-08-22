@@ -7,13 +7,16 @@
  */
 
 /**
- * Description of CrmAPI
- *
+ * Description of CrmAPIContext
+ * This is a simple class 
+ * with static methods to 
+ * perform various tasks using
+ * Dynamics Web services
  * @author epinapala
  */
-class CrmAPI {
+class CrmAPIContext {
 
-    public static function createOrg($CRMURL, $securityData) {
+    public function createOrg($CRMURL, $securityData, $newOrgName) {
 
         $domainname = substr($CRMURL, 8, -1);
         $pos = strpos($domainname, "/");
@@ -27,7 +30,7 @@ class CrmAPI {
                         <b:Attributes xmlns:c="http://schemas.datacontract.org/2004/07/System.Collections.Generic">
                             <b:KeyValuePairOfstringanyType>
                                 <c:key>name</c:key>
-                                <c:value i:type="d:string" xmlns:d="http://www.w3.org/2001/XMLSchema">Org Created From Rajesh\'s App</c:value>
+                                <c:value i:type="d:string" xmlns:d="http://www.w3.org/2001/XMLSchema">'.$newOrgName.'</c:value>
                             </b:KeyValuePairOfstringanyType>
                         </b:Attributes>
                         <b:EntityState i:nil="true"/>
@@ -56,7 +59,7 @@ class CrmAPI {
         return $createResult;
     }
 
-    public static function readOrg($accountId, $CRMURL, $securityData) {
+    public function readOrg($accountId, $CRMURL, $securityData) {
 
         $domainname = substr($CRMURL, 8, -1);
 
@@ -126,7 +129,7 @@ class CrmAPI {
         return $accountsArray;
     }
 
-    function updateOrg($accountId, $CRMURL, $securityData, $updatedOrgName) {
+    public function updateOrg($accountId, $CRMURL, $securityData, $updatedOrgName) {
 
         $domainname = substr($CRMURL, 8, -1);
 
@@ -157,7 +160,7 @@ class CrmAPI {
         return $response;
     }
 
-    function deleteOrg($accountId, $CRMURL, $securityData) {
+    public function deleteOrg($accountId, $CRMURL, $securityData) {
 
         $domainname = substr($CRMURL, 8, -1);
         $pos = strpos($domainname, "/");
