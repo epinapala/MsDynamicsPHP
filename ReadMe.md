@@ -5,6 +5,10 @@ interfaces. These interfaces are language neutral and accessible from many diffe
 languages. This makes ISVs that are working on disparate platforms to be able to connect and exchange 
 information with Dynamics CRM securely to integrate their solutions with Dynamics CRM.
 
+Credits to Dynamics CRM 2011 Developer Training Kit : http://www.microsoft.com/en-us/download/confirmation.aspx?id=23416
+
+Microsoft owns the code and I just modified parts of it. 
+
 > The Lab sample provided in the Dynamics CRM kit does not work out of the box, I tried getting this to work by making a few changes.I am sharing this with the community so that this can be helpful for others.
 
 
