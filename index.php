@@ -6,19 +6,36 @@
  * Developed for eBay internal use.
  */
 
-define('d', date("m/d/Y H:i:s"));
-set_include_path(get_include_path() . PATH_SEPARATOR . "src" . PATH_SEPARATOR . "utils");
+//set the timestamp
+define(
+        'd', 
+        date(
+                "m/d/Y H:i:s"
+                )
+        );
 
+//concatenate src and utils to the include path on the fly
+set_include_path(get_include_path() . 
+        PATH_SEPARATOR . 
+        "src" . 
+        PATH_SEPARATOR . 
+        "utils"
+        );
+
+//parse the config file 
+$config = parse_ini_file(
+        "config.ini", 
+        true
+        );
 
 include_once "LiveIdManager.php";
 include_once "EntityUtils.php";
 include_once 'PrintUtils.php';
 include_once 'CrmAPIContext.php';
 
-$liveIDUseranme = "Your CRM Username";
-$liveIDPassword = "YOUR CRM Password";
-$organizationServiceURL = "https://yourOrgName.api.crm.dynamics.com/XRMServices/2011/Organization.svc";// Get it from home > customizations > Developer Resources
-
+$liveIDUseranme = $config["dynamics"]["crmUserId"];
+$liveIDPassword = $config["dynamics"]["crmPassword"];
+$organizationServiceURL = $config["dynamics"]["organizationServiceURL"];
 
 $liveIDManager = new LiveIDManager();
 
