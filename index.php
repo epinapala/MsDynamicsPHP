@@ -28,7 +28,7 @@ $config = parse_ini_file(
         true
         );
 
-include_once "LiveIdManager.php";
+include_once "LiveIDManager.php";
 include_once "EntityUtils.php";
 include_once 'PrintUtils.php';
 include_once 'CrmAPIContext.php';
